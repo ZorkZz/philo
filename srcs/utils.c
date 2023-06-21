@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:52:37 by astachni          #+#    #+#             */
-/*   Updated: 2023/03/16 15:29:27 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/21 15:26:30 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	ft_strlen(const char *str)
 {
 	int	i;
 
+	i = 0;
 	while (str && str[i])
 		i++;
 	return (i);
