@@ -6,7 +6,7 @@
 #    By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/14 15:48:41 by astachni          #+#    #+#              #
-#    Updated: 2023/06/21 17:21:29 by astachni         ###   ########.fr        #
+#    Updated: 2023/06/22 17:51:25 by astachni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJS = $(SRCS:%.c=$(OBJS_DIR)%.o)
 
 CC = cc
 
-CFLAGS = -g -Wall -Werror -Wextra #-fsanitize=thread
+CFLAGS = -g -Wall -Werror -Wextra -g3 #-fsanitize=address
 
 RM = rm -rf
 

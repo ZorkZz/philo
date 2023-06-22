@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:29 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/21 17:24:45 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:57:27 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,24 @@ int	main(int ac, char **av)
 	philo = NULL;
 	if (ac > 1)
 	{
-		philo = init_var(philo, av);
-		philo->add_mutex = malloc(sizeof(t_mutex) * 1);
+		philo = init_var(philo, av, ac);
+		if (philo == NULL)
+			return (1);
+		philo->add_mutex = malloc(sizeof(t_mutex) + 1);
+		if (!philo->add_mutex)
+		{
+			free(philo->philo);
+			free(philo);
+			return (1);
+		}
 		philo->add_mutex = &philo->mutex;
-		//philo->mutex.i = 3;
+		philo->mutex.i = 3;
 		printf("nb_philo: %zd\n", philo->nb_philo);
 		pthread_mutex_init(&philo->mutex.mutex, NULL);
 		while (i < philo->nb_philo)
 		{
 			pthread_create(&philo->philo[i], NULL, txt1,
 				(void *)philo);
-			usleep(250);
 			i++;
 		}
 		i = 0;
@@ -42,8 +49,12 @@ int	main(int ac, char **av)
 			pthread_join(philo->philo[i], NULL);
 			i++;
 		}
+		usleep(250);
 		pthread_mutex_destroy(&philo->mutex.mutex);
 	}
+	free(philo->add_mutex);
+	free(philo->philo);
+	free(philo);
 	return (0);
 }
 
@@ -56,9 +67,9 @@ void	*txt1(void *philo)
 	philo_tmp = (t_philo *)philo;
 	i = 0;
 	str = "le mutex cest magique\n";
-	//pthread_mutex_lock(&philo_tmp->mutex.mutex);
+	pthread_mutex_lock(&philo_tmp->mutex.mutex);
 	while (i < ft_strlen(str))
 		write(1, &str[i++], 1);
-	//pthread_mutex_unlock(&philo_tmp->mutex.mutex);
+	pthread_mutex_unlock(&philo_tmp->mutex.mutex);
 	pthread_exit(NULL);
 }
