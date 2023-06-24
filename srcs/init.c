@@ -6,14 +6,17 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:50:19 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/24 17:25:20 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/24 18:02:49 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
 void		free_philo(t_the_philo **the_philo);
-void		init_the_philo(t_the_philo **the_philo, int nb_philo);
+void		init_the_philo(t_the_philo **the_philo,
+				int nb_philo, t_philo *philo);
+void		init_mutex(t_mutex **mutex, int nb_fork);
+t_the_philo	*attr_fork(t_the_philo *the_philo, t_mutex *mutex);
 
 t_philo	*init_var(t_philo *philo, char **strs, int nb_str)
 {
@@ -28,36 +31,41 @@ t_philo	*init_var(t_philo *philo, char **strs, int nb_str)
 		if (!philo->philo)
 			return (free(philo), NULL);
 		philo->the_philo = NULL;
-		init_the_philo(&philo->the_philo, philo->nb_philo);
+		init_the_philo(&philo->the_philo, philo->nb_philo, philo);
 		if (!philo->the_philo)
 			return (free(philo), free(philo->philo), NULL);
+		init_mutex(&philo->mutex, philo->nb_philo);
+		philo->the_philo = attr_fork(philo->the_philo, philo->mutex);
+		printf("%p, %p\n", &philo->the_philo->r_fork, & philo->the_philo->l_fork);
 	}
 	return (philo);
 }
 
-t_mutex	*ft_last_mutex(t_mutex *lst)
+t_the_philo	*attr_fork(t_the_philo *the_philo, t_mutex *mutex)
 {
-	if (!lst)
-		return (NULL);
-	while (lst->next != NULL)
-		lst = lst->next;
-	return (lst);
-}
+	t_the_philo	*temp;
+	t_mutex		*temp_mutex;
 
-void	mutex_add_back(t_mutex **stack, t_mutex *new_node)
-{
-	if (!stack)
-		return ;
-	if (*stack)
-		ft_last_mutex(*stack)->next = new_node;
-	else
-		*stack = new_node;
+	temp_mutex = mutex;
+	temp = the_philo;
+	printf("%p\n", &mutex->fork);
+	while (the_philo && mutex)
+	{
+		the_philo->l_fork = mutex->fork;
+		if (the_philo->next && mutex->next)
+			the_philo->r_fork = mutex->next->fork;
+		else if (!mutex->next)
+			the_philo->r_fork = temp_mutex->fork;
+		the_philo = the_philo->next;
+		mutex = mutex->next;
+	}
+	return (temp);
 }
 
 void	init_mutex(t_mutex **mutex, int nb_fork)
 {
-	t_mutex	*new_node;
-	int		i;
+	t_mutex		*new_node;
+	int			i;
 
 	i = 0;
 	while (i < nb_fork)
@@ -70,26 +78,8 @@ void	init_mutex(t_mutex **mutex, int nb_fork)
 	}
 }
 
-t_the_philo	*ft_last_cmd(t_the_philo *lst)
-{
-	if (!lst)
-		return (NULL);
-	while (lst->next != NULL)
-		lst = lst->next;
-	return (lst);
-}
 
-void	the_philo_add_back(t_the_philo **stack, t_the_philo *new_node)
-{
-	if (!stack)
-		return ;
-	if (*stack)
-		ft_last_cmd(*stack)->next = new_node;
-	else
-		*stack = new_node;
-}
-
-void	init_the_philo(t_the_philo **the_philo, int nb_philo)
+void	init_the_philo(t_the_philo **the_philo, int nb_philo, t_philo *philo)
 {
 	t_the_philo	*new_node;
 	int			i;
@@ -98,8 +88,8 @@ void	init_the_philo(t_the_philo **the_philo, int nb_philo)
 	while (i < nb_philo)
 	{
 		new_node = malloc(sizeof(t_the_philo));
+		new_node->thread = philo->philo[i];
 		new_node->next = NULL;
-		new_node->thread = 150;
 		the_philo_add_back(the_philo, new_node);
 		i++;
 	}

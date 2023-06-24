@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:57 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/24 17:18:17 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/24 17:57:11 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,7 @@ t_philo	*init_var(t_philo *philo, char **strs, int nb_str);
 int		ft_atoi(char *str);
 int		ft_strlen(const char *str);
 void	free_philo(t_the_philo **the_philo);
+void	the_philo_add_back(t_the_philo **stack, t_the_philo *new_node);
+void	mutex_add_back(t_mutex **stack, t_mutex *new_node);
 
 #endif

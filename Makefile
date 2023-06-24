@@ -6,13 +6,13 @@
 #    By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/14 15:48:41 by astachni          #+#    #+#              #
-#    Updated: 2023/06/22 17:51:25 by astachni         ###   ########.fr        #
+#    Updated: 2023/06/24 17:51:28 by astachni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRCS = srcs/init.c srcs/utils.c main.c
+SRCS = srcs/init.c srcs/utils.c srcs/utils_chain_list.c main.c
 
 OBJS_DIR = objs/
 
@@ -20,7 +20,7 @@ OBJS = $(SRCS:%.c=$(OBJS_DIR)%.o)
 
 CC = cc
 
-CFLAGS = -g -Wall -Werror -Wextra -g3 #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
 
 RM = rm -rf
 
