@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:57 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/24 17:57:11 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/25 17:35:45 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,12 @@ typedef struct s_mutex
 typedef struct s_the_philo
 {
 	pthread_t			thread;
-	pthread_mutex_t		l_fork;
-	pthread_mutex_t		r_fork;
+	pthread_mutex_t		*l_fork;
+	pthread_mutex_t		*r_fork;
 	ssize_t				time_to_eat;
 	ssize_t				time_to_sleep;
 	ssize_t				time_to_die;
+	ssize_t				nb_philo;
 	struct s_the_philo	*next;
 }	t_the_philo;
 
@@ -43,6 +44,9 @@ typedef struct s_philo
 	ssize_t		*fork;
 	ssize_t		is_finish;
 	ssize_t		time;
+	ssize_t		time_to_eat;
+	ssize_t		time_to_sleep;
+	ssize_t		time_to_die;
 	t_mutex		*mutex;
 	t_mutex		*add_mutex;
 	t_the_philo	*the_philo;
