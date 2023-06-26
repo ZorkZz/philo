@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:57 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/25 17:35:45 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/26 20:54:35 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <pthread.h>
+# include <sys/time.h>
 
 typedef struct s_mutex
 {
@@ -33,6 +34,7 @@ typedef struct s_the_philo
 	ssize_t				time_to_eat;
 	ssize_t				time_to_sleep;
 	ssize_t				time_to_die;
+	ssize_t				time_must_eat;
 	ssize_t				nb_philo;
 	struct s_the_philo	*next;
 }	t_the_philo;
@@ -47,6 +49,7 @@ typedef struct s_philo
 	ssize_t		time_to_eat;
 	ssize_t		time_to_sleep;
 	ssize_t		time_to_die;
+	ssize_t		time_must_eat;
 	t_mutex		*mutex;
 	t_mutex		*add_mutex;
 	t_the_philo	*the_philo;

@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:50:19 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/25 17:50:00 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/26 20:43:03 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ t_philo	*init_var(t_philo *philo, char **strs, int nb_str)
 		philo->time_to_die = ft_atoi(strs[2]);
 		philo->time_to_eat = ft_atoi(strs[3]);
 		philo->time_to_sleep = ft_atoi(strs[4]);
+		if (nb_str == 6)
+			philo->time_must_eat = ft_atoi(strs[5]);
+		else
+			philo->time_must_eat = -1;
 		philo->philo = NULL;
 		philo->philo = malloc(sizeof(pthread_t) * philo->nb_philo + 1);
 		if (!philo->philo)
@@ -81,7 +85,6 @@ void	init_mutex(t_mutex **mutex, int nb_fork)
 	}
 }
 
-
 void	init_the_philo(t_the_philo **the_philo, int nb_philo, t_philo *philo)
 {
 	t_the_philo	*new_node;
@@ -96,7 +99,8 @@ void	init_the_philo(t_the_philo **the_philo, int nb_philo, t_philo *philo)
 		new_node->time_to_die = philo->time_to_die;
 		new_node->time_to_eat = philo->time_to_eat;
 		new_node->time_to_sleep = philo->time_to_sleep;
-		//new_node->nb_philo = i;
+		new_node->time_must_eat = philo->time_must_eat;
+		new_node->nb_philo = i;
 		the_philo_add_back(the_philo, new_node);
 		i++;
 	}
