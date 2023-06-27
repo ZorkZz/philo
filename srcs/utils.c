@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:52:37 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/27 18:17:52 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/28 00:47:26 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,12 @@ int	ft_strlen(const char *str)
 	return (i);
 }
 
-ssize_t	get_time(void)
+long int	get_time(void)
 {
 	struct timeval	tv;
+	long int		time;
 
 	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * (ssize_t)10) + (tv.tv_usec / 10));
+	time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
+	return (time);
 }

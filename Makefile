@@ -6,7 +6,7 @@
 #    By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/14 15:48:41 by astachni          #+#    #+#              #
-#    Updated: 2023/06/27 17:42:23 by astachni         ###   ########.fr        #
+#    Updated: 2023/06/28 00:47:17 by astachni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,10 +30,10 @@ LIBS = -lpthread
 
 all: $(NAME)
 
-$(OBJS_DIR)%.o: %.c $(HEADERS) Makefile
+$(OBJS_DIR)%.o: %.c $(HEADER) Makefile
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME):	$(OBJS) $(LIBS) $(HEADERS) Makefile
+$(NAME):	$(OBJS) $(LIBS) $(HEADER) Makefile
 	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 	@norminette
 

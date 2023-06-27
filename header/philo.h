@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:57 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/27 18:23:21 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/28 00:47:01 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,25 +35,25 @@ typedef struct s_the_philo
 	pthread_t			check_death;
 	pthread_mutex_t		*l_fork;
 	pthread_mutex_t		*r_fork;
-	ssize_t				as_eat;
-	ssize_t				time;
-	ssize_t				last_eat;
-	ssize_t				nb_philo;
+	long int			as_eat;
+	long int			time;
+	long int			last_eat;
+	long int			nb_philo;
 	struct s_the_philo	*next;
 }	t_the_philo;
 
 typedef struct s_philo
 {
 	pthread_t		*philo;
-	ssize_t			nb_philo;
-	ssize_t			*fork;
-	ssize_t			is_finish;
-	ssize_t			time_to_eat;
-	ssize_t			time_to_sleep;
-	ssize_t			time_to_die;
-	ssize_t			time_must_eat;
-	ssize_t			is_dead;
-	ssize_t			start;
+	long int		nb_philo;
+	long int		*fork;
+	long int		is_finish;
+	long int		time_to_eat;
+	long int		time_to_sleep;
+	long int		time_to_die;
+	long int		time_must_eat;
+	long int		is_dead;
+	long int		start;
 	pthread_mutex_t	is_dead_mutex;
 	t_mutex			*mutex;
 	t_the_philo		*the_philo;
@@ -65,6 +65,6 @@ int		ft_strlen(const char *str);
 void	free_philo(t_the_philo **the_philo);
 void	the_philo_add_back(t_the_philo **stack, t_the_philo *new_node);
 void	mutex_add_back(t_mutex **stack, t_mutex *new_node);
-ssize_t	get_time(void);
+long int	get_time(void);
 void	*is_dead(void *philo);
 #endif
