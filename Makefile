@@ -6,13 +6,13 @@
 #    By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/14 15:48:41 by astachni          #+#    #+#              #
-#    Updated: 2023/06/24 17:51:28 by astachni         ###   ########.fr        #
+#    Updated: 2023/06/27 17:42:23 by astachni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRCS = srcs/init.c srcs/utils.c srcs/utils_chain_list.c main.c
+SRCS = srcs/init.c srcs/utils.c srcs/utils_chain_list.c srcs/death.c main.c
 
 OBJS_DIR = objs/
 

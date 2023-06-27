@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:50:19 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/27 17:13:36 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/27 17:38:39 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_philo	*init_var(t_philo *philo, char **strs, int nb_str)
 			philo->time_must_eat = ft_atoi(strs[5]);
 		else
 			philo->time_must_eat = -1;
+		philo->is_dead_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
 		philo->philo = NULL;
 		philo->philo = malloc(sizeof(pthread_t) * philo->nb_philo + 1);
 		if (!philo->philo)

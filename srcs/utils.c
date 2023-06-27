@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:52:37 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/27 16:39:58 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:17:52 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ ssize_t	get_time(void)
 {
 	struct timeval	tv;
 
-	if (gettimeofday(&tv, NULL))
-		return (-1);
+	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * (ssize_t)10) + (tv.tv_usec / 10));
 }

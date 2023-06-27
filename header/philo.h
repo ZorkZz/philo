@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:57 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/27 17:17:24 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/27 18:23:21 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,19 @@ typedef struct s_the_philo
 
 typedef struct s_philo
 {
-	pthread_t	*philo;
-	ssize_t		nb_philo;
-	ssize_t		*fork;
-	ssize_t		is_finish;
-	ssize_t		time_to_eat;
-	ssize_t		time_to_sleep;
-	ssize_t		time_to_die;
-	ssize_t		time_must_eat;
-	ssize_t		is_dead;
-	t_mutex		is_dead_mutex;
-	t_mutex		*mutex;
-	t_the_philo	*the_philo;
+	pthread_t		*philo;
+	ssize_t			nb_philo;
+	ssize_t			*fork;
+	ssize_t			is_finish;
+	ssize_t			time_to_eat;
+	ssize_t			time_to_sleep;
+	ssize_t			time_to_die;
+	ssize_t			time_must_eat;
+	ssize_t			is_dead;
+	ssize_t			start;
+	pthread_mutex_t	is_dead_mutex;
+	t_mutex			*mutex;
+	t_the_philo		*the_philo;
 }	t_philo;
 
 t_philo	*init_var(t_philo *philo, char **strs, int nb_str);
@@ -65,4 +66,5 @@ void	free_philo(t_the_philo **the_philo);
 void	the_philo_add_back(t_the_philo **stack, t_the_philo *new_node);
 void	mutex_add_back(t_mutex **stack, t_mutex *new_node);
 ssize_t	get_time(void);
+void	*is_dead(void *philo);
 #endif
