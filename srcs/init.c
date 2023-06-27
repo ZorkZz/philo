@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:50:19 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/26 20:43:03 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/27 16:23:12 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	init_the_philo(t_the_philo **the_philo, int nb_philo, t_philo *philo)
 		new_node = malloc(sizeof(t_the_philo));
 		new_node->thread = philo->philo[i];
 		new_node->next = NULL;
+		new_node->time = get_time();
 		new_node->time_to_die = philo->time_to_die;
 		new_node->time_to_eat = philo->time_to_eat;
 		new_node->time_to_sleep = philo->time_to_sleep;

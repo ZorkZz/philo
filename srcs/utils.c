@@ -6,9 +6,11 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:52:37 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/21 15:26:30 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/27 16:35:46 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../header/philo.h"
 
 int	ft_atoi(char *str)
 {
@@ -41,4 +43,13 @@ int	ft_strlen(const char *str)
 	while (str && str[i])
 		i++;
 	return (i);
+}
+
+u_int64_t	get_time(void)
+{
+	struct timeval	tv;
+
+	if (gettimeofday(&tv, NULL))
+		return (-1);
+	return ((tv.tv_sec * (u_int64_t)10) + (tv.tv_usec / 10));
 }
