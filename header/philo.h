@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:57 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/28 16:19:40 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/29 15:45:36 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ typedef struct s_the_philo
 	pthread_t			thread;
 	pthread_mutex_t		*l_fork;
 	pthread_mutex_t		*r_fork;
-	pthread_mutex_t		*start_simu;
+	pthread_mutex_t		*write_mutex;
+	pthread_mutex_t		*is_dead_mutex;
 	long int			as_eat;
 	long int			time;
 	long int			start;
@@ -60,18 +61,21 @@ typedef struct s_philo
 	long int		time_must_eat;
 	long int		is_dead;
 	long int		start;
-	pthread_mutex_t	start_simu;
+	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	is_dead_mutex;
 	t_mutex			*mutex;
 	t_the_philo		*the_philo;
 }	t_philo;
 
-t_philo	*init_var(t_philo *philo, char **strs, int nb_str);
-int		ft_atoi(char *str);
-int		ft_strlen(const char *str);
-void	free_philo(t_the_philo **the_philo);
-void	the_philo_add_back(t_the_philo **stack, t_the_philo *new_node);
-void	mutex_add_back(t_mutex **stack, t_mutex *new_node);
+t_philo		*init_var(t_philo *philo, char **strs, int nb_str);
+int			ft_atoi(char *str);
+int			ft_strlen(const char *str);
+void		free_philo(t_the_philo **the_philo);
+void		the_philo_add_back(t_the_philo **stack, t_the_philo *new_node);
+void		mutex_add_back(t_mutex **stack, t_mutex *new_node);
 long int	get_time(void);
-void	*is_dead(void *philo);
+void		*is_dead(void *philo);
+int			sleep_philo(t_the_philo *the_philo);
+int			eat(t_the_philo *the_philo);
+void		print_action(t_the_philo *the_philo, char *str);
 #endif

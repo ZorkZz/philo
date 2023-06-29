@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:50:19 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/28 16:39:46 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/29 15:51:51 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ t_philo	*init_var(t_philo *philo, char **strs, int nb_str)
 			philo->time_must_eat = -1;
 		philo->is_dead_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
 		pthread_mutex_init(&philo->is_dead_mutex, NULL);
-		philo->start_simu = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
-		pthread_mutex_init(&philo->start_simu, NULL);
+		philo->write_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
+		pthread_mutex_init(&philo->write_mutex, NULL);
 		philo->philo = NULL;
 		philo->philo = malloc(sizeof(pthread_t) * philo->nb_philo);
 		if (!philo->philo)
@@ -103,7 +103,8 @@ void	init_the_philo(t_the_philo **the_philo, int nb_philo, t_philo *philo)
 		new_node->time_must_eat = philo->time_must_eat;
 		new_node->time_to_eat = philo->time_to_eat;
 		new_node->time_to_sleep = philo->time_to_sleep;
-		new_node->start_simu = &philo->start_simu;
+		new_node->write_mutex = &philo->write_mutex;
+		new_node->is_dead_mutex = &philo->is_dead_mutex;
 		new_node->is_dead = -1;
 		new_node->nb_philo = i;
 		the_philo_add_back(the_philo, new_node);

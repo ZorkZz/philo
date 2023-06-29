@@ -6,13 +6,14 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 17:32:15 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/28 16:29:36 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/29 15:58:25 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-void	wait_philos(t_philo	*philo);
+void	dead_philo(t_the_philo	**the_philo);
+
 void	*is_dead(void *philo)
 {
 	t_philo		*philo_tmp;
@@ -20,22 +21,20 @@ void	*is_dead(void *philo)
 	t_the_philo	*the_philo_tmp;
 
 	philo_tmp = (t_philo *)philo;
-	wait_philos(philo_tmp);
 	the_philo = philo_tmp->the_philo;
-	printf("%p\n", the_philo->next);
 	while (philo_tmp->is_dead == -1)
 	{
 		the_philo_tmp = the_philo;
 		while (the_philo_tmp)
 		{
-			printf("%ld, %ld\n", philo_tmp->time_to_die, get_time() - the_philo_tmp->start - the_philo_tmp->last_eat);
-			if (philo_tmp->time_to_die < get_time() - the_philo_tmp->start - the_philo_tmp->last_eat)
+			if (philo_tmp->time_to_die < get_time() - the_philo_tmp->start - \
+				the_philo_tmp->last_eat)
 			{
 				pthread_mutex_lock(&philo_tmp->is_dead_mutex);
-				printf("%ld is dead", philo_tmp->the_philo->nb_philo);
-				philo_tmp->is_dead = 1;
-				exit(1);
+				print_action(the_philo_tmp, "is dead");
+				dead_philo(&the_philo);
 				pthread_mutex_unlock(&philo_tmp->is_dead_mutex);
+				pthread_exit(NULL);
 			}
 			the_philo_tmp = the_philo_tmp->next;
 		}
@@ -43,14 +42,12 @@ void	*is_dead(void *philo)
 	pthread_exit(NULL);
 }
 
-void	wait_philos(t_philo	*philo)
+void	dead_philo(t_the_philo	**the_philo)
 {
-	int	i;
-
-	i = -1;
-	pthread_mutex_lock(&philo->start_simu);
-	while (++i < 10)
-		usleep(1000);
-	pthread_mutex_unlock(&philo->start_simu);
-	return ;
+	while (the_philo && *the_philo)
+	{
+		pthread_detach((*the_philo)->thread);
+		(*the_philo)->is_dead = 1;
+		(*the_philo) = (*the_philo)->next;
+	}	
 }
