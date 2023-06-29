@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 17:32:15 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/29 15:58:25 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/29 18:07:29 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	dead_philo(t_the_philo	**the_philo)
 {
 	while (the_philo && *the_philo)
 	{
-		pthread_detach((*the_philo)->thread);
+		//pthread_detach((*the_philo)->thread);
 		(*the_philo)->is_dead = 1;
 		(*the_philo) = (*the_philo)->next;
 	}	
