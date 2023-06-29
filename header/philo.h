@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:57 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/29 15:45:36 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/29 20:50:09 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct s_the_philo
 	pthread_mutex_t		*r_fork;
 	pthread_mutex_t		*write_mutex;
 	pthread_mutex_t		*is_dead_mutex;
+	pthread_mutex_t		is_finish_mutex;
+	pthread_mutex_t		last_eat_mutex;
 	long int			as_eat;
 	long int			time;
 	long int			start;
@@ -44,6 +46,7 @@ typedef struct s_the_philo
 	long int			time_must_eat;
 	long int			last_eat;
 	long int			nb_philo;
+	int					is_finish;
 	int					is_dead;
 	struct s_the_philo	*next;
 }	t_the_philo;

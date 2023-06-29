@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:26:47 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/29 18:06:15 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/29 20:47:00 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,16 @@ int	unlock_mutex(t_the_philo *the_philo, int i)
 {
 	if (i == 1)
 	{
-		pthread_mutex_lock(the_philo->l_fork);
-		pthread_mutex_lock(the_philo->is_dead_mutex);
+		pthread_mutex_unlock(the_philo->l_fork);
+		pthread_mutex_unlock(the_philo->is_dead_mutex);
 	}
-	else if (i == 2)
+	else
 	{
 		pthread_mutex_unlock(the_philo->l_fork);
 		pthread_mutex_unlock(the_philo->r_fork);
 		pthread_mutex_unlock(the_philo->is_dead_mutex);
 	}
-	return (1);
+	pthread_exit(NULL);
 }
 
 int	eat(t_the_philo *the_philo)
@@ -52,7 +52,9 @@ int	eat(t_the_philo *the_philo)
 	print_action(the_philo, "take a fork");
 	print_action(the_philo, "is eating");
 	usleep(the_philo->time_to_eat * 1000);
+	pthread_mutex_lock(&the_philo->last_eat_mutex);
 	the_philo->last_eat = get_time() - the_philo->start;
+	pthread_mutex_unlock(&the_philo->last_eat_mutex);
 	pthread_mutex_unlock(the_philo->l_fork);
 	pthread_mutex_unlock(the_philo->r_fork);
 	return (0);
@@ -62,7 +64,10 @@ int	sleep_philo(t_the_philo *the_philo)
 {
 	pthread_mutex_lock(the_philo->is_dead_mutex);
 	if (the_philo->is_dead != -1)
-		return (1);
+	{
+		pthread_mutex_unlock(the_philo->is_dead_mutex);
+		pthread_exit(NULL);
+	}
 	pthread_mutex_unlock(the_philo->is_dead_mutex);
 	print_action(the_philo, "is sleeping");
 	usleep(the_philo->time_to_sleep * 1000);
@@ -70,7 +75,7 @@ int	sleep_philo(t_the_philo *the_philo)
 	if (the_philo->is_dead != -1)
 	{
 		pthread_mutex_unlock(the_philo->is_dead_mutex);
-		return (1);
+		pthread_exit(NULL);
 	}
 	pthread_mutex_unlock(the_philo->is_dead_mutex);
 	return (0);

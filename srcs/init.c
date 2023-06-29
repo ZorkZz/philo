@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:50:19 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/29 15:51:51 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/29 20:57:46 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,20 @@ void	init_mutex(t_mutex **mutex, int nb_fork)
 	}
 }
 
+t_the_philo	*add_mutex_philo(t_the_philo *new_node, t_philo *philo)
+{
+	new_node->time_must_eat = philo->time_must_eat;
+	new_node->time_to_eat = philo->time_to_eat;
+	new_node->time_to_sleep = philo->time_to_sleep;
+	new_node->write_mutex = &philo->write_mutex;
+	new_node->is_dead_mutex = &philo->is_dead_mutex;
+	new_node->is_finish_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_init(&new_node->is_finish_mutex, NULL);
+	new_node->last_eat_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
+	pthread_mutex_init(&new_node->last_eat_mutex, NULL);
+	return (new_node);
+}
+
 void	init_the_philo(t_the_philo **the_philo, int nb_philo, t_philo *philo)
 {
 	t_the_philo	*new_node;
@@ -100,12 +114,9 @@ void	init_the_philo(t_the_philo **the_philo, int nb_philo, t_philo *philo)
 		new_node = malloc(sizeof(t_the_philo));
 		new_node->thread = philo->philo[i];
 		new_node->next = NULL;
-		new_node->time_must_eat = philo->time_must_eat;
-		new_node->time_to_eat = philo->time_to_eat;
-		new_node->time_to_sleep = philo->time_to_sleep;
-		new_node->write_mutex = &philo->write_mutex;
-		new_node->is_dead_mutex = &philo->is_dead_mutex;
+		new_node = add_mutex_philo(new_node, philo);
 		new_node->is_dead = -1;
+		new_node->is_finish = -1;
 		new_node->nb_philo = i;
 		the_philo_add_back(the_philo, new_node);
 		i++;
