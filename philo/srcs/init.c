@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:50:19 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/29 20:57:46 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/30 14:34:34 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,14 @@ t_the_philo	*attr_fork(t_the_philo *the_philo, t_mutex *mutex);
 
 t_philo	*init_var(t_philo *philo, char **strs, int nb_str)
 {
-	if (nb_str > 3)
+	if (nb_str == 5 || nb_str == 6)
 	{
 		philo = malloc(sizeof(t_philo));
 		if (!philo)
 			return (NULL);
-		philo->nb_philo = ft_atoi(strs[1]);
-		philo->time_to_die = ft_atoi(strs[2]);
-		philo->time_to_eat = ft_atoi(strs[3]);
-		philo->time_to_sleep = ft_atoi(strs[4]);
-		if (nb_str == 6)
-			philo->time_must_eat = ft_atoi(strs[5]);
-		else
-			philo->time_must_eat = -1;
-		philo->is_dead_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
-		pthread_mutex_init(&philo->is_dead_mutex, NULL);
-		philo->write_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
-		pthread_mutex_init(&philo->write_mutex, NULL);
+		philo = parsing(philo, strs, nb_str);
+		if (!philo)
+			return (NULL);
 		philo->philo = NULL;
 		philo->philo = malloc(sizeof(pthread_t) * philo->nb_philo);
 		if (!philo->philo)
@@ -44,9 +35,11 @@ t_philo	*init_var(t_philo *philo, char **strs, int nb_str)
 		philo->the_philo = NULL;
 		init_the_philo(&philo->the_philo, philo->nb_philo, philo);
 		if (!philo->the_philo)
-			return (free(philo), free(philo->philo), NULL);
+			return (free(philo->philo), free(philo), NULL);
 		philo->mutex = NULL;
 		init_mutex(&philo->mutex, philo->nb_philo);
+		if (!philo->mutex)
+			return (free_program(philo), NULL);
 		philo->the_philo = attr_fork(philo->the_philo, philo->mutex);
 	}
 	return (philo);
@@ -112,6 +105,12 @@ void	init_the_philo(t_the_philo **the_philo, int nb_philo, t_philo *philo)
 	while (i < nb_philo)
 	{
 		new_node = malloc(sizeof(t_the_philo));
+		if (!new_node)
+		{
+			free_philo(the_philo);
+			*the_philo = NULL;
+			return ;
+		}
 		new_node->thread = philo->philo[i];
 		new_node->next = NULL;
 		new_node = add_mutex_philo(new_node, philo);
@@ -120,20 +119,5 @@ void	init_the_philo(t_the_philo **the_philo, int nb_philo, t_philo *philo)
 		new_node->nb_philo = i;
 		the_philo_add_back(the_philo, new_node);
 		i++;
-	}
-}
-
-void	free_philo(t_the_philo **the_philo)
-{
-	t_the_philo	*next;
-
-	if (!the_philo)
-		return ;
-	next = *the_philo;
-	while (next)
-	{
-		next = next->next;
-		free(*the_philo);
-		*the_philo = next;
 	}
 }

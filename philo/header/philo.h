@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:57 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/29 20:50:09 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/30 13:53:54 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,6 @@ void		*is_dead(void *philo);
 int			sleep_philo(t_the_philo *the_philo);
 int			eat(t_the_philo *the_philo);
 void		print_action(t_the_philo *the_philo, char *str);
+t_philo		*parsing(t_philo *philo, char **strs, int nb_str);
+void		free_program(t_philo *philo);
 #endif
