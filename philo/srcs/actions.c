@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:26:47 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/29 20:47:00 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/30 15:06:22 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ int	eat(t_the_philo *the_philo)
 	pthread_mutex_unlock(the_philo->is_dead_mutex);
 	print_action(the_philo, "take a fork");
 	print_action(the_philo, "is eating");
-	usleep(the_philo->time_to_eat * 1000);
 	pthread_mutex_lock(&the_philo->last_eat_mutex);
 	the_philo->last_eat = get_time() - the_philo->start;
 	pthread_mutex_unlock(&the_philo->last_eat_mutex);
+	usleep(the_philo->time_to_eat * 1000);
 	pthread_mutex_unlock(the_philo->l_fork);
 	pthread_mutex_unlock(the_philo->r_fork);
 	return (0);

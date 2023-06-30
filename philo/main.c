@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:29 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/30 14:31:27 by astachni         ###   ########.fr       */
+/*   Updated: 2023/06/30 15:25:09 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int ac, char **av)
 	t_the_philo		*the_philo;
 
 	philo = NULL;
-	if (ac > 3)
+	if (ac == 5 || ac == 6)
 	{
 		philo = init_var(philo, av, ac);
 		if (philo == NULL)
@@ -40,9 +40,10 @@ int	main(int ac, char **av)
 		pthread_create(&philo->check_death, NULL, is_dead, philo);
 		pthread_join(philo->check_death, NULL);
 		join_routine(the_philo);
+		free_program(philo);
+		return (EXIT_SUCCESS);
 	}
-	free_program(philo);
-	return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
 
 void	join_routine(t_the_philo *the_philo)
