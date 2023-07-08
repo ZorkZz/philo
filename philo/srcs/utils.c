@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:52:37 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/30 15:23:27 by astachni         ###   ########.fr       */
+/*   Updated: 2023/07/09 01:14:38 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,36 @@ long int	get_time(void)
 	gettimeofday(&tv, NULL);
 	time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 	return (time);
+}
+
+void	ft_usleep(long int time_in_ms)
+{
+	long int	start_time;
+
+	start_time = get_time();
+	while ((get_time() - start_time) < time_in_ms)
+		usleep(10);
+}
+
+void	wait_time(t_the_philo *the_philo, t_philo *philo)
+{
+	if (!philo)
+	{
+		if (the_philo->nb_philo == 0)
+		{
+			pthread_mutex_lock(the_philo->begin);
+			usleep(50);
+			pthread_mutex_unlock(the_philo->begin);
+		}
+		else
+		{
+			pthread_mutex_lock(the_philo->begin);
+			pthread_mutex_unlock(the_philo->begin);
+		}
+	}
+	else
+	{
+		pthread_mutex_lock(&philo->begin);
+		pthread_mutex_unlock(&philo->begin);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:57 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/30 13:53:54 by astachni         ###   ########.fr       */
+/*   Updated: 2023/07/09 01:15:00 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,10 @@ typedef struct s_the_philo
 	pthread_mutex_t		*is_dead_mutex;
 	pthread_mutex_t		is_finish_mutex;
 	pthread_mutex_t		last_eat_mutex;
+	pthread_mutex_t		*begin;
 	long int			as_eat;
 	long int			time;
-	long int			start;
+	long int			*start;
 	long int			time_to_sleep;
 	long int			time_to_eat;
 	long int			time_must_eat;
@@ -64,6 +65,7 @@ typedef struct s_philo
 	long int		time_must_eat;
 	long int		is_dead;
 	long int		start;
+	pthread_mutex_t	begin;
 	pthread_mutex_t	write_mutex;
 	pthread_mutex_t	is_dead_mutex;
 	t_mutex			*mutex;
@@ -83,4 +85,6 @@ int			eat(t_the_philo *the_philo);
 void		print_action(t_the_philo *the_philo, char *str);
 t_philo		*parsing(t_philo *philo, char **strs, int nb_str);
 void		free_program(t_philo *philo);
+void		ft_usleep(long int time_in_ms);
+void		wait_time(t_the_philo *the_philo, t_philo *philo);
 #endif

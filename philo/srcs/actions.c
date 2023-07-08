@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:26:47 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/30 15:06:22 by astachni         ###   ########.fr       */
+/*   Updated: 2023/07/09 00:53:39 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	print_action(t_the_philo *the_philo, char *str)
 {
 	pthread_mutex_lock(the_philo->write_mutex);
-	printf("%ld %ld %s\n", get_time() - the_philo->start,
+	printf("%ld %ld %s\n", get_time() - *the_philo->start,
 		the_philo->nb_philo, str);
 	pthread_mutex_unlock(the_philo->write_mutex);
 }
@@ -52,7 +52,7 @@ int	eat(t_the_philo *the_philo)
 	print_action(the_philo, "take a fork");
 	print_action(the_philo, "is eating");
 	pthread_mutex_lock(&the_philo->last_eat_mutex);
-	the_philo->last_eat = get_time() - the_philo->start;
+	the_philo->last_eat = get_time() - *the_philo->start;
 	pthread_mutex_unlock(&the_philo->last_eat_mutex);
 	usleep(the_philo->time_to_eat * 1000);
 	pthread_mutex_unlock(the_philo->l_fork);

@@ -6,14 +6,14 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:29 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/30 15:25:09 by astachni         ###   ########.fr       */
+/*   Updated: 2023/07/09 01:03:41 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header/philo.h"
 
 void		*routine(void *philo);
-void		start_routine(t_the_philo *the_philo);
+void		start_routine(t_the_philo *the_philo, t_philo *philo);
 void		join_routine(t_the_philo *the_philo);
 t_the_philo	*order_fork(t_the_philo *the_philo);
 
@@ -36,7 +36,7 @@ int	main(int ac, char **av)
 			the_philo = the_philo->next;
 		}
 		the_philo = philo->the_philo;
-		start_routine(the_philo);
+		start_routine(the_philo, philo);
 		pthread_create(&philo->check_death, NULL, is_dead, philo);
 		pthread_join(philo->check_death, NULL);
 		join_routine(the_philo);
@@ -55,11 +55,12 @@ void	join_routine(t_the_philo *the_philo)
 	}
 }
 
-void	start_routine(t_the_philo *the_philo)
+void	start_routine(t_the_philo *the_philo, t_philo *philo)
 {
+	philo->start = get_time();
 	while (the_philo)
 	{
-		the_philo->start = get_time();
+		the_philo->start = &philo->start;
 		pthread_create(&the_philo->thread, NULL,
 			routine, the_philo);
 		the_philo = the_philo->next;
@@ -73,9 +74,9 @@ void	*routine(void *philo)
 	t_the_philo	*the_philo;
 
 	the_philo = (t_the_philo *)philo;
-	the_philo->start = get_time();
 	i = 0;
 	time = the_philo->time_must_eat;
+	wait_time(philo, NULL);
 	pthread_mutex_lock(&the_philo->last_eat_mutex);
 	the_philo->last_eat = 0;
 	pthread_mutex_unlock(&the_philo->last_eat_mutex);

@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 17:32:15 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/29 20:55:35 by astachni         ###   ########.fr       */
+/*   Updated: 2023/07/09 01:15:38 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	*is_dead(void *philo)
 
 	philo_tmp = (t_philo *)philo;
 	the_philo = philo_tmp->the_philo;
+	wait_time(NULL, philo_tmp);
 	pthread_mutex_lock(&the_philo->last_eat_mutex);
 	the_philo->last_eat = 0;
 	pthread_mutex_unlock(&the_philo->last_eat_mutex);
@@ -33,7 +34,7 @@ void	*is_dead(void *philo)
 		while (the_philo_tmp)
 		{
 			pthread_mutex_lock(&the_philo_tmp->last_eat_mutex);
-			if (philo_tmp->time_to_die < get_time() - the_philo_tmp->start - \
+			if (philo_tmp->time_to_die < get_time() - *the_philo_tmp->start - \
 				the_philo_tmp->last_eat)
 				dead_condition(the_philo, the_philo_tmp, philo_tmp);
 			pthread_mutex_unlock(&the_philo_tmp->last_eat_mutex);

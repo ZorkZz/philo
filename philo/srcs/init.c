@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:50:19 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/30 15:25:22 by astachni         ###   ########.fr       */
+/*   Updated: 2023/07/09 00:41:22 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ t_philo	*init_var(t_philo *philo, char **strs, int nb_str)
 		if (!philo->philo)
 			return (free(philo), NULL);
 		philo->the_philo = NULL;
+		philo->begin = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
+		pthread_mutex_init(&philo->begin, NULL);
 		init_the_philo(&philo->the_philo, philo->nb_philo, philo);
 		if (!philo->the_philo)
 			return (free(philo->philo), free(philo), NULL);
@@ -93,6 +95,7 @@ t_the_philo	*add_mutex_philo(t_the_philo *new_node, t_philo *philo)
 	pthread_mutex_init(&new_node->is_finish_mutex, NULL);
 	new_node->last_eat_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_init(&new_node->last_eat_mutex, NULL);
+	new_node->begin = &philo->begin;
 	return (new_node);
 }
 

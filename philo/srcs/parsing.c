@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 13:40:25 by astachni          #+#    #+#             */
-/*   Updated: 2023/06/30 15:26:11 by astachni         ###   ########.fr       */
+/*   Updated: 2023/07/09 01:02:16 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,16 @@ t_philo	*parsing(t_philo *philo, char **strs, int nb_str)
 	if (verif_strs(strs, nb_str) == 1)
 		return (free(philo), NULL);
 	philo->nb_philo = ft_atoi(strs[1]);
-	if (philo->nb_philo == 1)
-	{
-		printf("0 0 is dead\n");
-		return (free(philo), NULL);
-	}
+	philo->start = get_time();
 	philo->time_to_die = ft_atoi(strs[2]);
 	philo->time_to_eat = ft_atoi(strs[3]);
 	philo->time_to_sleep = ft_atoi(strs[4]);
+	if (philo->nb_philo == 1)
+	{
+		usleep(philo->time_to_die * 1000);
+		printf("%ld 0 is dead\n", philo->time_to_die);
+		return (free(philo), NULL);
+	}
 	if (nb_str == 6)
 		philo->time_must_eat = ft_atoi(strs[5]);
 	else
