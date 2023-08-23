@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:26:47 by astachni          #+#    #+#             */
-/*   Updated: 2023/08/23 20:12:29 by astachni         ###   ########.fr       */
+/*   Updated: 2023/08/23 20:28:56 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	think(t_the_philo *the_philo, long int i)
 	if (i == 0 && the_philo->id_philo % 2 == 0 && the_philo->nb_philo % 2 == 0)
 	{
 		print_action(the_philo, "is thinking");
-		usleep(25 * the_philo->nb_philo);
+		usleep(100 * the_philo->nb_philo);
 	}
 	else if (i > 0)
 		print_action(the_philo, "is thinking");
