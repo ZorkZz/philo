@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:57 by astachni          #+#    #+#             */
-/*   Updated: 2023/07/09 01:15:00 by astachni         ###   ########.fr       */
+/*   Updated: 2023/08/23 19:09:57 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_the_philo
 	long int			time_to_eat;
 	long int			time_must_eat;
 	long int			last_eat;
+	long int			id_philo;
 	long int			nb_philo;
 	int					is_finish;
 	int					is_dead;
@@ -87,4 +88,5 @@ t_philo		*parsing(t_philo *philo, char **strs, int nb_str);
 void		free_program(t_philo *philo);
 void		ft_usleep(long int time_in_ms);
 void		wait_time(t_the_philo *the_philo, t_philo *philo);
+int			think(t_the_philo *the_philo, long int i);
 #endif

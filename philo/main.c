@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:29 by astachni          #+#    #+#             */
-/*   Updated: 2023/07/09 01:03:41 by astachni         ###   ########.fr       */
+/*   Updated: 2023/08/23 20:04:05 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,17 +77,18 @@ void	*routine(void *philo)
 	i = 0;
 	time = the_philo->time_must_eat;
 	wait_time(philo, NULL);
+	think(the_philo, i);
 	pthread_mutex_lock(&the_philo->last_eat_mutex);
-	the_philo->last_eat = 0;
+	the_philo->last_eat = get_time() - *the_philo->start;
 	pthread_mutex_unlock(&the_philo->last_eat_mutex);
 	while ((i < time || time == -1) && the_philo->is_dead == -1)
 	{
-		print_action(the_philo, "is thinking");
 		if (eat(the_philo) == 1)
 			pthread_exit(NULL);
 		if (sleep_philo(the_philo) == 1)
 			pthread_exit(NULL);
 		i++;
+		think(the_philo, i);
 	}
 	pthread_mutex_lock(&the_philo->is_finish_mutex);
 	the_philo->is_finish = 1;
@@ -99,7 +100,7 @@ t_the_philo	*order_fork(t_the_philo *the_philo)
 {
 	pthread_mutex_t	*temp;
 
-	if (the_philo->nb_philo % 2 == 0)
+	if (the_philo->id_philo % 2 == 0)
 	{
 		temp = the_philo->l_fork;
 		the_philo->l_fork = the_philo->r_fork;

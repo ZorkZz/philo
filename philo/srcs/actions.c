@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:26:47 by astachni          #+#    #+#             */
-/*   Updated: 2023/07/09 00:53:39 by astachni         ###   ########.fr       */
+/*   Updated: 2023/08/23 20:12:29 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	print_action(t_the_philo *the_philo, char *str)
 {
 	pthread_mutex_lock(the_philo->write_mutex);
 	printf("%ld %ld %s\n", get_time() - *the_philo->start,
-		the_philo->nb_philo, str);
+		the_philo->id_philo, str);
 	pthread_mutex_unlock(the_philo->write_mutex);
 }
 
@@ -43,13 +43,13 @@ int	eat(t_the_philo *the_philo)
 	if (the_philo->is_dead != -1)
 		return (unlock_mutex(the_philo, 1));
 	pthread_mutex_unlock(the_philo->is_dead_mutex);
-	print_action(the_philo, "take a fork");
+	print_action(the_philo, "has taken a fork");
 	pthread_mutex_lock(the_philo->r_fork);
 	pthread_mutex_lock(the_philo->is_dead_mutex);
 	if (the_philo->is_dead != -1)
 		return (unlock_mutex(the_philo, 2));
 	pthread_mutex_unlock(the_philo->is_dead_mutex);
-	print_action(the_philo, "take a fork");
+	print_action(the_philo, "has taken a fork");
 	print_action(the_philo, "is eating");
 	pthread_mutex_lock(&the_philo->last_eat_mutex);
 	the_philo->last_eat = get_time() - *the_philo->start;
@@ -78,5 +78,22 @@ int	sleep_philo(t_the_philo *the_philo)
 		pthread_exit(NULL);
 	}
 	pthread_mutex_unlock(the_philo->is_dead_mutex);
+	return (0);
+}
+
+int	think(t_the_philo *the_philo, long int i)
+{
+	if (i == 0 && the_philo->id_philo % 2 == 0 && the_philo->nb_philo % 2 == 0)
+	{
+		print_action(the_philo, "is thinking");
+		usleep(25 * the_philo->nb_philo);
+	}
+	else if (i > 0)
+		print_action(the_philo, "is thinking");
+	else if (i == 0 && the_philo->id_philo % 2 != 0
+		&& the_philo->nb_philo % 2 == 0)
+		print_action(the_philo, "is thinking");
+	else if (i == 0 && the_philo->nb_philo % 2 != 0)
+		print_action(the_philo, "is thinking");
 	return (0);
 }

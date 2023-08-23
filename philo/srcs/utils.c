@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:52:37 by astachni          #+#    #+#             */
-/*   Updated: 2023/07/09 01:14:38 by astachni         ###   ########.fr       */
+/*   Updated: 2023/08/23 19:45:46 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	ft_usleep(long int time_in_ms)
 	long int	start_time;
 
 	start_time = get_time();
-	while ((get_time() - start_time) < time_in_ms)
-		usleep(10);
+	while ((get_time() - start_time) <= time_in_ms / 1000)
+		usleep(1);
 }
 
 void	wait_time(t_the_philo *the_philo, t_philo *philo)

@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:50:19 by astachni          #+#    #+#             */
-/*   Updated: 2023/07/09 00:41:22 by astachni         ###   ########.fr       */
+/*   Updated: 2023/08/23 19:04:17 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,8 @@ void	init_the_philo(t_the_philo **the_philo, int nb_philo, t_philo *philo)
 		new_node = add_mutex_philo(new_node, philo);
 		new_node->is_dead = -1;
 		new_node->is_finish = -1;
-		new_node->nb_philo = i;
+		new_node->id_philo = i;
+		new_node->nb_philo = philo->nb_philo;
 		the_philo_add_back(the_philo, new_node);
 		i++;
 	}
