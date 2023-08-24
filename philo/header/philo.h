@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:57 by astachni          #+#    #+#             */
-/*   Updated: 2023/08/23 19:09:57 by astachni         ###   ########.fr       */
+/*   Updated: 2023/08/24 15:57:12 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,5 @@ void		free_program(t_philo *philo);
 void		ft_usleep(long int time_in_ms);
 void		wait_time(t_the_philo *the_philo, t_philo *philo);
 int			think(t_the_philo *the_philo, long int i);
+long int	call_action(t_the_philo *the_philo, long int i);
 #endif

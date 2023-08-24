@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:29 by astachni          #+#    #+#             */
-/*   Updated: 2023/08/24 15:42:22 by astachni         ###   ########.fr       */
+/*   Updated: 2023/08/24 15:57:39 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,7 @@ void	*routine(void *philo)
 	think(the_philo, i);
 	pthread_mutex_lock(the_philo->is_dead_mutex);
 	while ((i < time || time == -1) && the_philo->is_dead == -1)
-	{
-		pthread_mutex_unlock(the_philo->is_dead_mutex);
-		if (eat(the_philo) == 1)
-			pthread_exit(NULL);
-		if (sleep_philo(the_philo) == 1)
-			pthread_exit(NULL);
-		i++;
-		think(the_philo, i);
-		pthread_mutex_lock(the_philo->is_dead_mutex);
-	}
+		i = call_action(the_philo, i);
 	pthread_mutex_unlock(the_philo->is_dead_mutex);
 	pthread_mutex_lock(&the_philo->is_finish_mutex);
 	the_philo->is_finish = 1;
