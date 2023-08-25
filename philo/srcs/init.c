@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:50:19 by astachni          #+#    #+#             */
-/*   Updated: 2023/08/23 19:04:17 by astachni         ###   ########.fr       */
+/*   Updated: 2023/08/25 16:02:18 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	init_mutex(t_mutex **mutex, int nb_fork)
 
 t_the_philo	*add_mutex_philo(t_the_philo *new_node, t_philo *philo)
 {
+	new_node->time_to_die = philo->time_to_die;
 	new_node->time_must_eat = philo->time_must_eat;
 	new_node->time_to_eat = philo->time_to_eat;
 	new_node->time_to_sleep = philo->time_to_sleep;
