@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:26:47 by astachni          #+#    #+#             */
-/*   Updated: 2023/08/25 20:01:48 by astachni         ###   ########.fr       */
+/*   Updated: 2023/08/27 17:18:13 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	unlock_mutex(t_the_philo *the_philo, int i);
 
 void	print_action(t_the_philo *the_philo, char *str, int code)
 {
+	pthread_mutex_lock(the_philo->write_mutex);
 	if (code != 4)
 	{
 		pthread_mutex_lock(the_philo->is_dead_mutex);
@@ -23,16 +24,8 @@ void	print_action(t_the_philo *the_philo, char *str, int code)
 			return (unlock_mutex(the_philo, code));
 		pthread_mutex_unlock(the_philo->is_dead_mutex);
 	}
-	pthread_mutex_lock(the_philo->write_mutex);
-	if (code != 4)
-	{
-		pthread_mutex_lock(the_philo->is_dead_mutex);
-		if (the_philo->is_dead != -1)
-			return (unlock_mutex(the_philo, 0));
-		pthread_mutex_unlock(the_philo->is_dead_mutex);
-	}
-	printf("%ld %ld %s\n", get_time() - *the_philo->start,
-		the_philo->id_philo, str);
+	printf("%ld %ld %s\n", (get_time() - 50 * the_philo->nb_philo)
+		- *the_philo->start, the_philo->id_philo + 1, str);
 	pthread_mutex_unlock(the_philo->write_mutex);
 }
 
@@ -45,10 +38,7 @@ void	unlock_mutex(t_the_philo *the_philo, int i)
 		pthread_mutex_unlock(the_philo->l_fork);
 		pthread_mutex_unlock(the_philo->r_fork);
 	}
-	if (i == 0)
-	{
-		pthread_mutex_unlock(the_philo->write_mutex);
-	}
+	pthread_mutex_unlock(the_philo->write_mutex);
 	pthread_mutex_unlock(the_philo->is_dead_mutex);
 	pthread_exit(NULL);
 }
@@ -78,6 +68,8 @@ int	sleep_philo(t_the_philo *the_philo)
 
 int	think(t_the_philo *the_philo, long int i)
 {
+	int	usleep_time;
+
 	if (i == 0 && the_philo->id_philo % 2 == 0 && the_philo->nb_philo % 2 == 0)
 	{
 		print_action(the_philo, "is thinking", 3);
@@ -85,15 +77,19 @@ int	think(t_the_philo *the_philo, long int i)
 	}
 	else if (i > 0 && the_philo->nb_philo % 2 != 0)
 	{
+		if (the_philo->time_to_eat <= the_philo->time_to_sleep)
+			usleep_time = the_philo->time_to_sleep;
+		else if (the_philo->time_to_eat > the_philo->time_to_sleep)
+			usleep_time = the_philo->time_to_eat;
 		print_action(the_philo, "is thinking", 3);
-		//usleep(the_philo->id_philo * 50);
+		usleep(usleep_time * 1000);
 	}
-	else if (i > 0 && the_philo->nb_philo % 2 == 0)
-		print_action(the_philo, "is thinking", 3);
 	else if (i == 0 && the_philo->id_philo % 2 != 0
 		&& the_philo->nb_philo % 2 == 0)
 		print_action(the_philo, "is thinking", 3);
 	else if (i == 0 && the_philo->nb_philo % 2 != 0)
+		print_action(the_philo, "is thinking", 3);
+	else if (i > 0)
 		print_action(the_philo, "is thinking", 3);
 	return (0);
 }

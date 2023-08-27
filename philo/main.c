@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/10 15:28:29 by astachni          #+#    #+#             */
-/*   Updated: 2023/08/25 15:32:43 by astachni         ###   ########.fr       */
+/*   Updated: 2023/08/27 16:54:45 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	*routine(void *philo)
 	pthread_mutex_lock(&the_philo->last_eat_mutex);
 	the_philo->last_eat = get_time() - *the_philo->start;
 	pthread_mutex_unlock(&the_philo->last_eat_mutex);
-	if (the_philo->nb_philo % 2 == 0)
+	if (the_philo->nb_philo % 2 == 0 && the_philo->id_philo % 2 == 0)
 		think(the_philo, i);
 	while (i < time || time == -1)
 		i = call_action(the_philo, i);
