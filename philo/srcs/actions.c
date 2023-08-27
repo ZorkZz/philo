@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 14:26:47 by astachni          #+#    #+#             */
-/*   Updated: 2023/08/27 17:18:13 by astachni         ###   ########.fr       */
+/*   Updated: 2023/08/27 17:26:50 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	unlock_mutex(t_the_philo *the_philo, int i)
 int	eat(t_the_philo *the_philo)
 {
 	pthread_mutex_lock(the_philo->l_fork);
-	print_action(the_philo, "has taken a fork", 1);
+	print_action(the_philo, "has taken a fork 0", 1);
 	pthread_mutex_lock(the_philo->r_fork);
 	print_action(the_philo, "has taken a fork", 2);
 	print_action(the_philo, "is eating", 2);
