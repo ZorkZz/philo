@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 13:40:25 by astachni          #+#    #+#             */
-/*   Updated: 2023/07/09 01:02:16 by astachni         ###   ########.fr       */
+/*   Updated: 2023/08/27 17:18:35 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_philo	*parsing(t_philo *philo, char **strs, int nb_str)
 	if (philo->nb_philo == 1)
 	{
 		usleep(philo->time_to_die * 1000);
-		printf("%ld 0 is dead\n", philo->time_to_die);
+		printf("%ld 1 is dead\n", philo->time_to_die);
 		return (free(philo), NULL);
 	}
 	if (nb_str == 6)
