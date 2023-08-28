@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:52:37 by astachni          #+#    #+#             */
-/*   Updated: 2023/08/25 13:32:20 by astachni         ###   ########.fr       */
+/*   Updated: 2023/08/28 19:53:46 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	wait_time(t_the_philo *the_philo, t_philo *philo)
 		if (the_philo->id_philo == 0)
 		{
 			pthread_mutex_lock(the_philo->begin);
-			usleep(50000 * (the_philo->nb_philo - the_philo->id_philo));
+			usleep(50000 * the_philo->nb_philo);
 			pthread_mutex_unlock(the_philo->begin);
 		}
 		else
@@ -86,8 +86,9 @@ void	wait_time(t_the_philo *the_philo, t_philo *philo)
 	}
 	else
 	{
+		while (philo->begin.__data.__lock > 0)
+			;
 		pthread_mutex_lock(&philo->begin);
-		usleep(50 * philo->nb_philo);
 		pthread_mutex_unlock(&philo->begin);
 	}
 }
