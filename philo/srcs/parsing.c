@@ -6,14 +6,15 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 13:40:25 by astachni          #+#    #+#             */
-/*   Updated: 2023/08/27 17:18:35 by astachni         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:03:15 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/philo.h"
 
-int	verif_strs(char **strs, int nb_str);
-int	verif_int(int nb);
+int		verif_strs(char **strs, int nb_str);
+int		verif_int(int nb);
+void	*ft_one_philo(t_philo *philo);
 
 t_philo	*parsing(t_philo *philo, char **strs, int nb_str)
 {
@@ -25,11 +26,7 @@ t_philo	*parsing(t_philo *philo, char **strs, int nb_str)
 	philo->time_to_eat = ft_atoi(strs[3]);
 	philo->time_to_sleep = ft_atoi(strs[4]);
 	if (philo->nb_philo == 1)
-	{
-		usleep(philo->time_to_die * 1000);
-		printf("%ld 1 is dead\n", philo->time_to_die);
-		return (free(philo), NULL);
-	}
+		return (ft_one_philo(philo), NULL);
 	if (nb_str == 6)
 		philo->time_must_eat = ft_atoi(strs[5]);
 	else
@@ -41,6 +38,18 @@ t_philo	*parsing(t_philo *philo, char **strs, int nb_str)
 	pthread_mutex_init(&philo->is_dead_mutex, NULL);
 	philo->write_mutex = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
 	pthread_mutex_init(&philo->write_mutex, NULL);
+	return (philo);
+}
+
+void	*ft_one_philo(t_philo *philo)
+{
+	if (philo->nb_philo == 1)
+	{
+		printf("0 1 has taken a fork\n");
+		usleep(philo->time_to_die * 1000);
+		printf("%ld 1 is dead\n", philo->time_to_die);
+		return (free(philo), NULL);
+	}
 	return (philo);
 }
 
