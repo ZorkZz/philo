@@ -6,7 +6,7 @@
 /*   By: astachni <astachni@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/14 15:52:37 by astachni          #+#    #+#             */
-/*   Updated: 2023/08/28 19:53:46 by astachni         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:46:08 by astachni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	wait_time(t_the_philo *the_philo, t_philo *philo)
 		{
 			pthread_mutex_lock(the_philo->begin);
 			usleep(50000 * the_philo->nb_philo);
+			*the_philo->start = get_time();
 			pthread_mutex_unlock(the_philo->begin);
 		}
 		else
